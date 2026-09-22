@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f8d7e3">
-  <title>Princess Birthday</title>
+
+  <title>Anniversaire de ma petite princesse</title>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Italiana&display=swap');
 
@@ -18,354 +20,1781 @@
       --ink: #593d4a;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       overflow-x: hidden;
       color: var(--ink);
       font-family: "DM Sans", sans-serif;
+
       background:
-        radial-gradient(circle at 15% 8%, #fff 0 3px, transparent 4px),
-        radial-gradient(circle at 84% 14%, rgba(216,176,106,.3) 0 2px, transparent 3px),
-        linear-gradient(155deg, var(--cream), var(--blush) 52%, #f7dce7);
+        radial-gradient(
+          circle at 15% 8%,
+          #fff 0 3px,
+          transparent 4px
+        ),
+        radial-gradient(
+          circle at 84% 14%,
+          rgba(216, 176, 106, 0.3) 0 2px,
+          transparent 3px
+        ),
+        linear-gradient(
+          155deg,
+          var(--cream),
+          var(--blush) 52%,
+          #f7dce7
+        );
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      opacity: .24;
+      opacity: 0.24;
       pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
       z-index: 10;
+
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");
     }
 
-    button, a { font: inherit; }
-    .hidden { display: none !important; }
-    .stage { min-height: 100svh; position: relative; }
+    button,
+    a {
+      font: inherit;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .stage {
+      min-height: 100svh;
+      position: relative;
+    }
+
+    /* =========================
+       OPENING
+    ========================= */
+
     .opening {
       min-height: 100svh;
       display: grid;
       place-items: center;
       padding: 32px 22px;
       text-align: center;
-      transition: opacity .65s ease, transform .65s ease;
+
+      transition:
+        opacity 0.65s ease,
+        transform 0.65s ease;
     }
-    .opening.leaving { opacity: 0; transform: scale(1.035); }
-    .opening-inner { width: min(100%, 410px); position: relative; z-index: 2; }
+
+    .opening.leaving {
+      opacity: 0;
+      transform: scale(1.035);
+    }
+
+    .opening-inner {
+      width: min(100%, 410px);
+      position: relative;
+      z-index: 2;
+    }
+
     .eyebrow {
       margin: 0 0 14px;
       color: var(--rose);
-      font-size: .72rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: .23em;
+      letter-spacing: 0.23em;
       text-transform: uppercase;
     }
-    h1, h2, h3 { font-family: "Italiana", serif; font-weight: 400; }
-    .opening h1 { margin: 0; font-size: clamp(2.7rem, 13vw, 4.3rem); line-height: .95; }
-    .opening-copy { max-width: 280px; margin: 18px auto 26px; line-height: 1.7; color: #755667; }
 
-    .envelope-wrap { width: 260px; height: 205px; margin: 8px auto 22px; perspective: 900px; cursor: pointer; }
-    .envelope { position: relative; width: 100%; height: 168px; top: 24px; filter: drop-shadow(0 22px 24px rgba(118,68,91,.18)); }
-    .envelope-back { position: absolute; inset: 0; background: #efb9ca; border-radius: 10px; }
-    .letter {
-      position: absolute; left: 20px; right: 20px; bottom: 10px; height: 136px;
-      padding: 25px 14px; background: var(--cream); border: 1px solid rgba(216,176,106,.36);
-      border-radius: 7px; text-align: center; z-index: 2; transition: transform .8s cubic-bezier(.2,.8,.2,1);
+    h1,
+    h2,
+    h3 {
+      font-family: "Italiana", serif;
+      font-weight: 400;
     }
-    .letter::before { content: "✦"; display: block; color: var(--gold); font-size: 1.1rem; margin-bottom: 6px; }
-    .letter strong { font-family: "Italiana", serif; font-size: 1.2rem; }
-    .envelope-front { position: absolute; inset: 0; z-index: 3; overflow: hidden; border-radius: 0 0 10px 10px; }
-    .envelope-front::before, .envelope-front::after { content: ""; position: absolute; bottom: 0; width: 65%; height: 100%; background: #f5c9d6; }
-    .envelope-front::before { left: 0; clip-path: polygon(0 0, 100% 55%, 100% 100%, 0 100%); }
-    .envelope-front::after { right: 0; clip-path: polygon(100% 0, 0 55%, 0 100%, 100% 100%); }
-    .flap { position: absolute; top: 0; left: 0; width: 100%; height: 92px; z-index: 4; transform-origin: top; transition: transform .7s cubic-bezier(.2,.8,.2,1); transform-style: preserve-3d; }
-    .flap::before { content: ""; position: absolute; inset: 0; background: #e9aebf; clip-path: polygon(0 0, 100% 0, 50% 100%); backface-visibility: hidden; }
-    .seal { position: absolute; left: 50%; top: 68px; translate: -50% -50%; z-index: 5; width: 48px; height: 48px; display: grid; place-items: center; color: white; background: var(--rose); border: 3px solid #edacc5; border-radius: 50%; box-shadow: 0 3px 8px rgba(89,61,74,.18); transition: opacity .3s ease .15s; }
-    .envelope.is-open .flap { transform: rotateX(180deg); }
-    .envelope.is-open .letter { transform: translateY(-70px); }
-    .envelope.is-open .seal { opacity: 0; }
+
+    .opening h1 {
+      margin: 0;
+      font-size: clamp(2.7rem, 13vw, 4.3rem);
+      line-height: 0.95;
+    }
+
+    .opening-copy {
+      max-width: 280px;
+      margin: 18px auto 26px;
+      line-height: 1.7;
+      color: #755667;
+    }
+
+    /* =========================
+       ENVELOPPE
+    ========================= */
+
+    .envelope-wrap {
+      width: 260px;
+      height: 205px;
+      margin: 8px auto 22px;
+      perspective: 900px;
+      cursor: pointer;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 168px;
+      top: 24px;
+
+      filter:
+        drop-shadow(
+          0 22px 24px rgba(118, 68, 91, 0.18)
+        );
+    }
+
+    .envelope-back {
+      position: absolute;
+      inset: 0;
+      background: #efb9ca;
+      border-radius: 10px;
+    }
+
+    .letter {
+      position: absolute;
+      left: 20px;
+      right: 20px;
+      bottom: 10px;
+      height: 136px;
+
+      padding: 25px 14px;
+
+      background: var(--cream);
+      border: 1px solid rgba(216, 176, 106, 0.36);
+      border-radius: 7px;
+
+      text-align: center;
+      z-index: 2;
+
+      transition:
+        transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .letter::before {
+      content: "✦";
+      display: block;
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    .letter strong {
+      font-family: "Italiana", serif;
+      font-size: 1.2rem;
+    }
+
+    .envelope-front {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      overflow: hidden;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .envelope-front::before,
+    .envelope-front::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 65%;
+      height: 100%;
+      background: #f5c9d6;
+    }
+
+    .envelope-front::before {
+      left: 0;
+      clip-path: polygon(
+        0 0,
+        100% 55%,
+        100% 100%,
+        0 100%
+      );
+    }
+
+    .envelope-front::after {
+      right: 0;
+      clip-path: polygon(
+        100% 0,
+        0 55%,
+        0 100%,
+        100% 100%
+      );
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 92px;
+      z-index: 4;
+
+      transform-origin: top;
+      transform-style: preserve-3d;
+
+      transition:
+        transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .flap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background: #e9aebf;
+
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 100%
+      );
+
+      backface-visibility: hidden;
+    }
+
+    .seal {
+      position: absolute;
+      left: 50%;
+      top: 68px;
+
+      transform: translate(-50%, -50%);
+
+      z-index: 5;
+
+      width: 48px;
+      height: 48px;
+
+      display: grid;
+      place-items: center;
+
+      color: white;
+      background: var(--rose);
+
+      border: 3px solid #edacc5;
+      border-radius: 50%;
+
+      box-shadow:
+        0 3px 8px rgba(89, 61, 74, 0.18);
+
+      transition: opacity 0.3s ease 0.15s;
+    }
+
+    .envelope.is-open .flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope.is-open .letter {
+      transform: translateY(-70px);
+    }
+
+    .envelope.is-open .seal {
+      opacity: 0;
+    }
+
+    /* =========================
+       BOUTONS
+    ========================= */
 
     .primary-btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      min-height: 54px; padding: 0 24px; border: 0; border-radius: 999px;
-      color: white; background: var(--berry); cursor: pointer; text-decoration: none; font-weight: 700;
-      box-shadow: 0 12px 28px rgba(129,75,101,.22); transition: transform .2s ease, box-shadow .2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      min-height: 54px;
+      padding: 0 24px;
+
+      border: 0;
+      border-radius: 999px;
+
+      color: white;
+      background: var(--berry);
+
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 700;
+
+      box-shadow:
+        0 12px 28px rgba(129, 75, 101, 0.22);
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
-    .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(129,75,101,.28); }
-    .primary-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
 
-    .invitation { display: none; opacity: 0; }
-    .invitation.visible { display: block; animation: pageIn .8s ease forwards; }
-    .hero { min-height: 100svh; display: grid; align-content: center; padding: 70px 22px 54px; position: relative; text-align: center; }
-    .hero-card { width: min(100%, 460px); margin: auto; position: relative; }
-    .tiny-crown { color: var(--gold); font-size: 1.65rem; margin-bottom: 8px; animation: sway 3s ease-in-out infinite; }
-    .hero h2 { font-size: clamp(3.2rem, 15vw, 5.3rem); line-height: .88; margin: 0; color: var(--berry); }
-    .hero h2 span { display: block; margin-top: 12px; color: var(--rose); font-size: .43em; letter-spacing: .08em; }
-    .age-line { margin: 16px 0 8px; font-size: 1.05rem; letter-spacing: .05em; }
-    .age-line strong { color: var(--berry); }
-    .intro { max-width: 345px; margin: 0 auto; color: #765a67; line-height: 1.7; }
+    .primary-btn:hover {
+      transform: translateY(-2px);
 
-    .characters { position: relative; height: 272px; margin: 25px auto 4px; width: min(100%, 390px); }
-    .girl, .mouse-girl { position: absolute; bottom: 0; animation: float 4s ease-in-out infinite; }
-    .girl { left: 14%; width: 144px; }
-    .mouse-girl { right: 10%; width: 132px; animation-delay: -1.4s; }
-    .shadow { fill: rgba(129,75,101,.11); }
+      box-shadow:
+        0 16px 34px rgba(129, 75, 101, 0.28);
+    }
 
-    .scroll-note { display: inline-flex; gap: 8px; align-items: center; margin-top: 12px; color: var(--rose); font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
-    .scroll-note::after { content: "↓"; animation: bob 1.7s ease-in-out infinite; }
+    .primary-btn:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 4px;
+    }
 
-    .content { padding: 10px 20px 80px; }
+    /* =========================
+       INVITATION
+    ========================= */
+
+    .invitation {
+      display: none;
+      opacity: 0;
+    }
+
+    .invitation.visible {
+      display: block;
+      animation: pageIn 0.8s ease forwards;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 100svh;
+
+      display: grid;
+      align-content: center;
+
+      padding: 70px 22px 54px;
+
+      position: relative;
+      text-align: center;
+    }
+
+    .hero-card {
+      width: min(100%, 460px);
+      margin: auto;
+      position: relative;
+    }
+
+    .tiny-crown {
+      color: var(--gold);
+      font-size: 1.65rem;
+      margin-bottom: 8px;
+
+      animation:
+        sway 3s ease-in-out infinite;
+    }
+
+    .hero h2 {
+      font-size: clamp(3.2rem, 15vw, 5.3rem);
+      line-height: 0.88;
+      margin: 0;
+      color: var(--berry);
+    }
+
+    .hero h2 span {
+      display: block;
+      margin-top: 12px;
+
+      color: var(--rose);
+      font-size: 0.43em;
+      letter-spacing: 0.08em;
+    }
+
+    .age-line {
+      margin: 16px 0 8px;
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
+    }
+
+    .age-line strong {
+      color: var(--berry);
+    }
+
+    .intro {
+      max-width: 345px;
+      margin: 0 auto;
+
+      color: #765a67;
+      line-height: 1.7;
+    }
+
+    /* =========================
+       PERSONNAGES
+    ========================= */
+
+    .characters {
+      position: relative;
+
+      height: 272px;
+      margin: 25px auto 4px;
+
+      width: min(100%, 390px);
+    }
+
+    .girl,
+    .mouse-girl {
+      position: absolute;
+      bottom: 0;
+
+      animation:
+        float 4s ease-in-out infinite;
+    }
+
+    .girl {
+      left: 14%;
+      width: 144px;
+    }
+
+    .mouse-girl {
+      right: 10%;
+      width: 132px;
+
+      animation-delay: -1.4s;
+    }
+
+    .shadow {
+      fill: rgba(129, 75, 101, 0.11);
+    }
+
+    .scroll-note {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+
+      margin-top: 12px;
+
+      color: var(--rose);
+      font-size: 0.75rem;
+      font-weight: 700;
+
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .scroll-note::after {
+      content: "↓";
+      animation:
+        bob 1.7s ease-in-out infinite;
+    }
+
+    /* =========================
+       CARTES
+    ========================= */
+
+    .content {
+      padding: 10px 20px 80px;
+    }
+
     .card {
-      width: min(100%, 520px); margin: 0 auto 22px; padding: 34px 24px;
-      border: 1px solid rgba(216,176,106,.35); border-radius: 30px; background: rgba(255,249,245,.72);
-      box-shadow: 0 20px 55px rgba(125,75,97,.09); backdrop-filter: blur(10px); text-align: center;
+      width: min(100%, 520px);
+      margin: 0 auto 22px;
+
+      padding: 34px 24px;
+
+      border: 1px solid rgba(216, 176, 106, 0.35);
+      border-radius: 30px;
+
+      background: rgba(255, 249, 245, 0.72);
+
+      box-shadow:
+        0 20px 55px rgba(125, 75, 97, 0.09);
+
+      backdrop-filter: blur(10px);
+
+      text-align: center;
     }
-    .card-label { color: var(--gold); font-size: .7rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; }
-    .card h3 { margin: 9px 0 24px; font-size: 2rem; color: var(--berry); }
-    .details { display: grid; gap: 12px; text-align: left; }
-    .detail { display: grid; grid-template-columns: 46px 1fr; gap: 13px; align-items: center; padding: 13px; border-radius: 18px; background: rgba(248,215,227,.42); }
-    .detail-icon { width: 46px; height: 46px; display: grid; place-items: center; color: var(--berry); border-radius: 15px; background: var(--cream); font-size: 1.15rem; }
-    .detail small { display: block; color: #9c7b8a; font-size: .67rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-    .detail strong { display: block; margin-top: 2px; font-size: .92rem; }
-    .map-link { width: 100%; margin-top: 19px; background: var(--rose); }
 
-    .message-card { overflow: hidden; position: relative; padding: 40px 29px; }
-    .message-card::before, .message-card::after { content: "✿"; position: absolute; color: var(--powder); font-size: 4.3rem; line-height: 1; }
-    .message-card::before { top: -14px; left: -10px; rotate: -18deg; }
-    .message-card::after { right: -12px; bottom: -12px; rotate: 18deg; }
-    .message-card p { margin: 0; line-height: 1.85; color: #715662; position: relative; z-index: 1; }
-    .message-card strong { color: var(--berry); }
-    .rsvp-card { background: var(--berry); color: white; border: 0; }
-    .rsvp-card .card-label { color: #efd29e; }
-    .rsvp-card h3 { color: white; }
-    .rsvp-card p { color: #f8eaf0; line-height: 1.7; margin: -9px auto 22px; max-width: 330px; }
-    .rsvp-card .primary-btn { background: var(--cream); color: var(--berry); box-shadow: none; }
-    footer { text-align: center; padding: 2px 20px 30px; color: #9a7888; font-family: "Italiana", serif; }
+    .card-label {
+      color: var(--gold);
 
-    .sparkle, .heart { position: fixed; pointer-events: none; z-index: 1; }
-    .sparkle { color: var(--gold); animation: twinkle 2.5s ease-in-out infinite; }
-    .heart { bottom: -30px; color: rgba(217,130,165,.34); animation: rise var(--speed) linear infinite; }
-    .reveal { opacity: 0; transform: translateY(25px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.in { opacity: 1; transform: none; }
+      font-size: 0.7rem;
+      font-weight: 700;
 
-    .confetti { position: fixed; top: -15px; width: 8px; height: 14px; z-index: 20; border-radius: 2px; pointer-events: none; animation: confettiFall 1.9s linear forwards; }
-    @keyframes pageIn { to { opacity: 1; } }
-    @keyframes float { 50% { transform: translateY(-10px) rotate(1deg); } }
-    @keyframes sway { 50% { transform: rotate(8deg) translateY(-3px); } }
-    @keyframes bob { 50% { transform: translateY(5px); } }
-    @keyframes twinkle { 50% { opacity: .25; transform: scale(.72) rotate(35deg); } }
-    @keyframes rise { to { transform: translateY(-115vh) rotate(25deg); } }
-    @keyframes confettiFall { to { transform: translate3d(var(--drift), 110vh, 0) rotate(720deg); } }
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .card h3 {
+      margin: 9px 0 24px;
+
+      font-size: 2rem;
+      color: var(--berry);
+    }
+
+    .details {
+      display: grid;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .detail {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 13px;
+      align-items: center;
+
+      padding: 13px;
+
+      border-radius: 18px;
+
+      background:
+        rgba(248, 215, 227, 0.42);
+    }
+
+    .detail-icon {
+      width: 46px;
+      height: 46px;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--berry);
+
+      border-radius: 15px;
+
+      background: var(--cream);
+
+      font-size: 1.15rem;
+    }
+
+    .detail small {
+      display: block;
+
+      color: #9c7b8a;
+
+      font-size: 0.67rem;
+      font-weight: 700;
+
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .detail strong {
+      display: block;
+      margin-top: 2px;
+
+      font-size: 0.92rem;
+    }
+
+    .map-link {
+      width: 100%;
+      margin-top: 19px;
+
+      background: var(--rose);
+    }
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .message-card {
+      overflow: hidden;
+      position: relative;
+
+      padding: 40px 29px;
+    }
+
+    .message-card::before,
+    .message-card::after {
+      content: "✿";
+
+      position: absolute;
+
+      color: var(--powder);
+
+      font-size: 4.3rem;
+      line-height: 1;
+    }
+
+    .message-card::before {
+      top: -14px;
+      left: -10px;
+
+      transform: rotate(-18deg);
+    }
+
+    .message-card::after {
+      right: -12px;
+      bottom: -12px;
+
+      transform: rotate(18deg);
+    }
+
+    .message-card p {
+      margin: 0;
+
+      line-height: 1.85;
+      color: #715662;
+
+      position: relative;
+      z-index: 1;
+    }
+
+    .message-card strong {
+      color: var(--berry);
+    }
+
+    /* =========================
+       RSVP
+    ========================= */
+
+    .rsvp-card {
+      background: var(--berry);
+      color: white;
+
+      border: 0;
+    }
+
+    .rsvp-card .card-label {
+      color: #efd29e;
+    }
+
+    .rsvp-card h3 {
+      color: white;
+    }
+
+    .rsvp-card p {
+      color: #f8eaf0;
+
+      line-height: 1.7;
+
+      margin: -9px auto 22px;
+
+      max-width: 330px;
+    }
+
+    .rsvp-card .primary-btn {
+      background: var(--cream);
+      color: var(--berry);
+      box-shadow: none;
+    }
+
+    footer {
+      text-align: center;
+
+      padding: 2px 20px 30px;
+
+      color: #9a7888;
+
+      font-family: "Italiana", serif;
+    }
+
+    /* =========================
+       DECORATIONS
+    ========================= */
+
+    .sparkle,
+    .heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .sparkle {
+      color: var(--gold);
+
+      animation:
+        twinkle 2.5s ease-in-out infinite;
+    }
+
+    .heart {
+      bottom: -30px;
+
+      color: rgba(217, 130, 165, 0.34);
+
+      animation:
+        rise var(--speed) linear infinite;
+    }
+
+    /* =========================
+       REVEAL
+    ========================= */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(25px);
+
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* =========================
+       CONFETTI
+    ========================= */
+
+    .confetti {
+      position: fixed;
+
+      top: -15px;
+
+      width: 8px;
+      height: 14px;
+
+      z-index: 20;
+
+      border-radius: 2px;
+
+      pointer-events: none;
+
+      animation:
+        confettiFall 1.9s linear forwards;
+    }
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+
+    @keyframes pageIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      50% {
+        transform:
+          translateY(-10px)
+          rotate(1deg);
+      }
+    }
+
+    @keyframes sway {
+      50% {
+        transform:
+          rotate(8deg)
+          translateY(-3px);
+      }
+    }
+
+    @keyframes bob {
+      50% {
+        transform: translateY(5px);
+      }
+    }
+
+    @keyframes twinkle {
+      50% {
+        opacity: 0.25;
+        transform:
+          scale(0.72)
+          rotate(35deg);
+      }
+    }
+
+    @keyframes rise {
+      to {
+        transform:
+          translateY(-115vh)
+          rotate(25deg);
+      }
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform:
+          translate3d(var(--drift), 110vh, 0)
+          rotate(720deg);
+      }
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
 
     @media (min-width: 720px) {
-      .hero { padding-top: 50px; }
-      .characters { height: 300px; }
-      .girl { width: 158px; }
-      .mouse-girl { width: 145px; }
-      .card { padding: 42px; }
+      .hero {
+        padding-top: 50px;
+      }
+
+      .characters {
+        height: 300px;
+      }
+
+      .girl {
+        width: 158px;
+      }
+
+      .mouse-girl {
+        width: 145px;
+      }
+
+      .card {
+        padding: 42px;
+      }
     }
+
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
+
 <body>
+
+  <!-- =========================
+       DÉCORATIONS
+  ========================= -->
+
   <div aria-hidden="true">
-    <span class="sparkle" style="top:8%;left:8%;font-size:18px">✦</span>
-    <span class="sparkle" style="top:18%;right:9%;font-size:12px;animation-delay:-1s">✦</span>
-    <span class="sparkle" style="top:67%;left:6%;font-size:13px;animation-delay:-.4s">✧</span>
-    <span class="sparkle" style="top:79%;right:8%;font-size:20px;animation-delay:-1.6s">✧</span>
-    <span class="heart" style="left:8%;--speed:13s;animation-delay:-3s">♥</span>
-    <span class="heart" style="left:83%;--speed:16s;animation-delay:-8s">♥</span>
-    <span class="heart" style="left:54%;--speed:18s;animation-delay:-12s">♥</span>
+
+    <span
+      class="sparkle"
+      style="top:8%;left:8%;font-size:18px">
+      ✦
+    </span>
+
+    <span
+      class="sparkle"
+      style="top:18%;right:9%;font-size:12px;animation-delay:-1s">
+      ✦
+    </span>
+
+    <span
+      class="sparkle"
+      style="top:67%;left:6%;font-size:13px;animation-delay:-.4s">
+      ✧
+    </span>
+
+    <span
+      class="sparkle"
+      style="top:79%;right:8%;font-size:20px;animation-delay:-1.6s">
+      ✧
+    </span>
+
+    <span
+      class="heart"
+      style="left:8%;--speed:13s;animation-delay:-3s">
+      ♥
+    </span>
+
+    <span
+      class="heart"
+      style="left:83%;--speed:16s;animation-delay:-8s">
+      ♥
+    </span>
+
+    <span
+      class="heart"
+      style="left:54%;--speed:18s;animation-delay:-12s">
+      ♥
+    </span>
+
   </div>
 
   <main class="stage">
-    <section class="opening" id="opening" aria-labelledby="opening-title">
-      <div class="opening-inner">
-        <p class="eyebrow">Un petit secret pour toi</p>
-        <h1 id="opening-title">Une jolie fête<br>se prépare…</h1>
-        <p class="opening-copy">Une invitation pleine de douceur t'attend dans cette enveloppe.</p>
 
-        <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="Ouvrir l'enveloppe">
+    <!-- =========================
+         ÉCRAN D'OUVERTURE
+    ========================= -->
+
+    <section
+      class="opening"
+      id="opening"
+      aria-labelledby="opening-title">
+
+      <div class="opening-inner">
+
+        <p class="eyebrow">
+          Un petit secret pour toi
+        </p>
+
+        <h1 id="opening-title">
+          Une jolie fête<br>
+          se prépare…
+        </h1>
+
+        <p class="opening-copy">
+          Une invitation pleine de douceur
+          t'attend dans cette enveloppe.
+        </p>
+
+        <div
+          class="envelope-wrap"
+          id="envelope"
+          role="button"
+          tabindex="0"
+          aria-label="Ouvrir l'enveloppe">
+
           <div class="envelope">
+
             <div class="envelope-back"></div>
-            <div class="letter"><strong>Pour toi,<br>avec tendresse</strong></div>
+
+            <div class="letter">
+              <strong>
+                Pour toi,<br>
+                avec tendresse
+              </strong>
+            </div>
+
             <div class="flap"></div>
+
             <div class="envelope-front"></div>
-            <div class="seal">♥</div>
+
+            <div class="seal">
+              ♥
+            </div>
+
           </div>
         </div>
-        <button class="primary-btn" id="openButton">✦ Ouvrir l'invitation</button>
+
+        <button
+          class="primary-btn"
+          id="openButton">
+          ✦ Ouvrir l'invitation
+        </button>
+
       </div>
     </section>
 
-    <div class="invitation" id="invitation">
-      <section class="hero" aria-labelledby="birthday-title">
+
+    <!-- =========================
+         INVITATION
+    ========================= -->
+
+    <div
+      class="invitation"
+      id="invitation">
+
+      <!-- HERO -->
+
+      <section
+        class="hero"
+        aria-labelledby="birthday-title">
+
         <div class="hero-card">
-          <div class="tiny-crown" aria-hidden="true">♕</div>
-          <p class="eyebrow">Tu es invité·e à</p>
-          <h2 id="birthday-title">Mon anniversaire <span>[PRÉNOM] fête ses [ÂGE] ans</span></h2>
-          <p class="intro">Une journée remplie de rires, de jeux et de jolies surprises t'attend…</p>
 
-          <div class="characters" aria-label="Illustration d'une fillette et d'une petite souris festive">
-            <svg class="girl" viewBox="0 0 180 280" role="img" aria-label="Petite fille en robe rose">
-              <ellipse class="shadow" cx="90" cy="269" rx="61" ry="10"/>
-              <path d="M65 108c-20 11-30 37-26 60 3 17 15 23 15 23s-18 31-20 63h113c-3-32-21-63-21-63s12-6 15-23c4-24-8-49-28-60z" fill="#d982a5"/>
-              <path d="M72 190 54 254h74l-20-64z" fill="#f4b9cb"/>
-              <path d="m57 221-15 37h95l-16-37c-18 10-43 10-64 0z" fill="#d982a5"/>
-              <path d="M69 253v14M113 253v14" stroke="#7b5264" stroke-width="7" stroke-linecap="round"/>
-              <path d="M61 268h18M105 268h18" stroke="#593d4a" stroke-width="7" stroke-linecap="round"/>
-              <circle cx="91" cy="83" r="43" fill="#8c5948"/>
-              <circle cx="91" cy="91" r="37" fill="#f2c6a8"/>
-              <path d="M54 81c3-41 29-52 54-39 18 9 22 30 19 41-12-5-22-17-25-28-9 15-28 25-48 26z" fill="#5e3c35"/>
-              <path d="M58 81c-9 0-11 19 1 21M124 81c10 0 11 19 0 21" fill="#f2c6a8"/>
-              <circle cx="78" cy="91" r="3" fill="#593d4a"/><circle cx="106" cy="91" r="3" fill="#593d4a"/>
-              <path d="M84 106c5 4 11 4 16 0" fill="none" stroke="#b45e72" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M52 43c9-16 21-15 36 2-8 9-18 11-28 7zM130 43c-9-16-21-15-36 2 8 9 18 11 28 7z" fill="#d982a5"/>
-              <circle cx="91" cy="46" r="9" fill="#e8a5bc"/>
-              <path d="M67 116c11 12 36 12 49 0l11 67c-18 16-57 16-73 0z" fill="#fff9f5" opacity=".9"/>
-              <circle cx="73" cy="148" r="5" fill="#d8b06a"/><circle cx="108" cy="160" r="4" fill="#d8b06a"/><circle cx="91" cy="178" r="5" fill="#d8b06a"/>
-            </svg>
-
-            <svg class="mouse-girl" viewBox="0 0 180 280" role="img" aria-label="Petite souris en robe à pois">
-              <ellipse class="shadow" cx="90" cy="269" rx="62" ry="10"/>
-              <circle cx="49" cy="72" r="31" fill="#40343b"/><circle cx="131" cy="72" r="31" fill="#40343b"/>
-              <circle cx="90" cy="91" r="49" fill="#40343b"/>
-              <ellipse cx="90" cy="100" rx="37" ry="41" fill="#f2c6a8"/>
-              <ellipse cx="90" cy="115" rx="24" ry="18" fill="#f6d4bb"/>
-              <circle cx="76" cy="94" r="4" fill="#382e34"/><circle cx="105" cy="94" r="4" fill="#382e34"/>
-              <path d="M85 111q5 5 10 0" fill="none" stroke="#593d4a" stroke-width="3" stroke-linecap="round"/>
-              <path d="M57 45c11-19 23-19 33 0-11 13-22 13-33 0zM123 45c-11-19-23-19-33 0 11 13 22 13 33 0z" fill="#d982a5"/>
-              <circle cx="90" cy="45" r="10" fill="#efadc4"/>
-              <path d="M61 138c16-10 42-10 58 0l23 111H39z" fill="#d982a5"/>
-              <path d="M69 135c6 16 37 16 43 0l5 28H64z" fill="#fff9f5"/>
-              <circle cx="66" cy="190" r="6" fill="#fff9f5"/><circle cx="104" cy="204" r="6" fill="#fff9f5"/><circle cx="126" cy="226" r="6" fill="#fff9f5"/><circle cx="58" cy="235" r="6" fill="#fff9f5"/>
-              <path d="M56 247 48 266M124 247l8 19" stroke="#40343b" stroke-width="7" stroke-linecap="round"/>
-              <path d="M39 267h22M121 267h22" stroke="#593d4a" stroke-width="7" stroke-linecap="round"/>
-            </svg>
+          <div
+            class="tiny-crown"
+            aria-hidden="true">
+            ♕
           </div>
-          <div class="scroll-note">Les petits détails</div>
+
+          <p class="eyebrow">
+            Tu es invité·e à
+          </p>
+
+          <h2 id="birthday-title">
+
+            L'anniversaire
+            <span>
+              de ma petite princesse
+            </span>
+
+          </h2>
+
+          <p class="age-line">
+            <strong>
+              [PRÉNOM]
+            </strong>
+            fête ses
+            <strong>
+              [ÂGE] ans
+            </strong>
+            🎂
+          </p>
+
+          <p class="intro">
+            Une journée magique remplie de
+            rires, de jeux, de gourmandises
+            et de jolies surprises t'attend…
+            ✨
+          </p>
+
+
+          <!-- PERSONNAGES -->
+
+          <div
+            class="characters"
+            aria-label="Illustration d'une petite fille princesse et d'une petite souris festive">
+
+            <!-- PETITE PRINCESSE -->
+
+            <svg
+              class="girl"
+              viewBox="0 0 180 280"
+              role="img"
+              aria-label="Petite fille princesse en robe rose">
+
+              <ellipse
+                class="shadow"
+                cx="90"
+                cy="269"
+                rx="61"
+                ry="10"/>
+
+              <path
+                d="M65 108c-20 11-30 37-26 60
+                   3 17 15 23 15 23s-18 31-20 63
+                   h113c-3-32-21-63-21-63s12-6
+                   15-23c4-24-8-49-28-60z"
+                fill="#d982a5"/>
+
+              <path
+                d="M72 190 54 254h74l-20-64z"
+                fill="#f4b9cb"/>
+
+              <path
+                d="m57 221-15 37h95l-16-37
+                   c-18 10-43 10-64 0z"
+                fill="#d982a5"/>
+
+              <path
+                d="M69 253v14M113 253v14"
+                stroke="#7b5264"
+                stroke-width="7"
+                stroke-linecap="round"/>
+
+              <path
+                d="M61 268h18M105 268h18"
+                stroke="#593d4a"
+                stroke-width="7"
+                stroke-linecap="round"/>
+
+              <circle
+                cx="91"
+                cy="83"
+                r="43"
+                fill="#8c5948"/>
+
+              <circle
+                cx="91"
+                cy="91"
+                r="37"
+                fill="#f2c6a8"/>
+
+              <path
+                d="M54 81c3-41 29-52 54-39
+                   18 9 22 30 19 41
+                   -12-5-22-17-25-28
+                   -9 15-28 25-48 26z"
+                fill="#5e3c35"/>
+
+              <path
+                d="M58 81c-9 0-11 19 1 21
+                   M124 81c10 0 11 19 0 21"
+                fill="#f2c6a8"/>
+
+              <circle
+                cx="78"
+                cy="91"
+                r="3"
+                fill="#593d4a"/>
+
+              <circle
+                cx="106"
+                cy="91"
+                r="3"
+                fill="#593d4a"/>
+
+              <path
+                d="M84 106c5 4 11 4 16 0"
+                fill="none"
+                stroke="#b45e72"
+                stroke-width="2.5"
+                stroke-linecap="round"/>
+
+              <!-- Ruban -->
+
+              <path
+                d="M52 43c9-16 21-15 36 2
+                   -8 9-18 11-28 7z
+                   M130 43c-9-16-21-15-36 2
+                   8 9 18 11 28 7z"
+                fill="#d982a5"/>
+
+              <circle
+                cx="91"
+                cy="46"
+                r="9"
+                fill="#e8a5bc"/>
+
+              <!-- Robe -->
+
+              <path
+                d="M67 116c11 12 36 12 49 0
+                   l11 67c-18 16-57 16-73 0z"
+                fill="#fff9f5"
+                opacity=".9"/>
+
+              <circle
+                cx="73"
+                cy="148"
+                r="5"
+                fill="#d8b06a"/>
+
+              <circle
+                cx="108"
+                cy="160"
+                r="4"
+                fill="#d8b06a"/>
+
+              <circle
+                cx="91"
+                cy="178"
+                r="5"
+                fill="#d8b06a"/>
+
+            </svg>
+
+
+            <!-- PETITE SOURIS -->
+
+            <svg
+              class="mouse-girl"
+              viewBox="0 0 180 280"
+              role="img"
+              aria-label="Petite souris en robe à pois">
+
+              <ellipse
+                class="shadow"
+                cx="90"
+                cy="269"
+                rx="62"
+                ry="10"/>
+
+              <circle
+                cx="49"
+                cy="72"
+                r="31"
+                fill="#40343b"/>
+
+              <circle
+                cx="131"
+                cy="72"
+                r="31"
+                fill="#40343b"/>
+
+              <circle
+                cx="90"
+                cy="91"
+                r="49"
+                fill="#40343b"/>
+
+              <ellipse
+                cx="90"
+                cy="100"
+                rx="37"
+                ry="41"
+                fill="#f2c6a8"/>
+
+              <ellipse
+                cx="90"
+                cy="115"
+                rx="24"
+                ry="18"
+                fill="#f6d4bb"/>
+
+              <circle
+                cx="76"
+                cy="94"
+                r="4"
+                fill="#382e34"/>
+
+              <circle
+                cx="105"
+                cy="94"
+                r="4"
+                fill="#382e34"/>
+
+              <path
+                d="M85 111q5 5 10 0"
+                fill="none"
+                stroke="#593d4a"
+                stroke-width="3"
+                stroke-linecap="round"/>
+
+              <path
+                d="M57 45c11-19 23-19 33 0
+                   -11 13-22 13-33 0z
+                   M123 45c-11-19-23-19-33 0
+                   11 13 22 13 33 0z"
+                fill="#d982a5"/>
+
+              <circle
+                cx="90"
+                cy="45"
+                r="10"
+                fill="#efadc4"/>
+
+              <path
+                d="M61 138c16-10 42-10 58 0
+                   l23 111H39z"
+                fill="#d982a5"/>
+
+              <path
+                d="M69 135c6 16 37 16 43 0
+                   l5 28H64z"
+                fill="#fff9f5"/>
+
+              <circle
+                cx="66"
+                cy="190"
+                r="6"
+                fill="#fff9f5"/>
+
+              <circle
+                cx="104"
+                cy="204"
+                r="6"
+                fill="#fff9f5"/>
+
+              <circle
+                cx="126"
+                cy="226"
+                r="6"
+                fill="#fff9f5"/>
+
+              <circle
+                cx="58"
+                cy="235"
+                r="6"
+                fill="#fff9f5"/>
+
+              <path
+                d="M56 247 48 266
+                   M124 247l8 19"
+                stroke="#40343b"
+                stroke-width="7"
+                stroke-linecap="round"/>
+
+              <path
+                d="M39 267h22M121 267h22"
+                stroke="#593d4a"
+                stroke-width="7"
+                stroke-linecap="round"/>
+
+            </svg>
+
+          </div>
+
+          <div class="scroll-note">
+            Les petits détails
+          </div>
+
         </div>
+
       </section>
 
-      <section class="content" aria-label="Détails de l'invitation">
+
+      <!-- =========================
+           DÉTAILS
+      ========================= -->
+
+      <section
+        class="content"
+        aria-label="Détails de l'invitation">
+
         <article class="card reveal">
-          <div class="card-label">À noter dans ton agenda</div>
-          <h3>Rendez-vous pour faire la fête !</h3>
-          <div class="details">
-            <div class="detail">
-              <div class="detail-icon" aria-hidden="true">◇</div>
-              <div><small>Date</small><strong>[JOUR — DATE]</strong></div>
-            </div>
-            <div class="detail">
-              <div class="detail-icon" aria-hidden="true">◷</div>
-              <div><small>Heure</small><strong>[HEURE]</strong></div>
-            </div>
-            <div class="detail">
-              <div class="detail-icon" aria-hidden="true">⌖</div>
-              <div><small>Lieu</small><strong>[NOM DU LIEU]</strong></div>
-            </div>
+
+          <div class="card-label">
+            À noter dans ton agenda
           </div>
-          <button class="primary-btn map-link" id="mapButton">⌖ Voir l'emplacement</button>
+
+          <h3>
+            Rendez-vous pour faire la fête !
+          </h3>
+
+          <div class="details">
+
+            <div class="detail">
+
+              <div
+                class="detail-icon"
+                aria-hidden="true">
+                ◇
+              </div>
+
+              <div>
+                <small>Date</small>
+                <strong id="dateText">
+                  [JOUR — DATE]
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail">
+
+              <div
+                class="detail-icon"
+                aria-hidden="true">
+                ◷
+              </div>
+
+              <div>
+                <small>Heure</small>
+                <strong id="timeText">
+                  [HEURE]
+                </strong>
+              </div>
+
+            </div>
+
+
+            <div class="detail">
+
+              <div
+                class="detail-icon"
+                aria-hidden="true">
+                ⌖
+              </div>
+
+              <div>
+                <small>Lieu</small>
+                <strong id="placeText">
+                  [NOM DU LIEU]
+                </strong>
+              </div>
+
+            </div>
+
+          </div>
+
+          <button
+            class="primary-btn map-link"
+            id="mapButton">
+            ⌖ Voir l'emplacement
+          </button>
+
         </article>
+
+
+        <!-- MESSAGE -->
 
         <article class="card message-card reveal">
-          <div class="card-label">Un petit mot</div>
-          <h3>Ta présence est notre cadeau</h3>
-          <p><strong>Ta présence rendra cette journée encore plus spéciale !</strong><br>
-          Viens partager avec nous un joli moment rempli de sourires, de gourmandises et de magie.</p>
+
+          <div class="card-label">
+            Un petit mot
+          </div>
+
+          <h3>
+            Ta présence est notre cadeau
+          </h3>
+
+          <p>
+            <strong>
+              Ta présence rendra cette journée
+              encore plus spéciale !
+            </strong>
+            <br><br>
+
+            Viens partager avec nous un joli
+            moment rempli de sourires,
+            de gourmandises, de jeux
+            et de magie.
+            ✨
+          </p>
+
         </article>
+
+
+        <!-- RSVP -->
 
         <article class="card rsvp-card reveal">
-          <div class="card-label">Nous serons ravis de te voir</div>
-          <h3>Seras-tu de la fête ?</h3>
-          <p>Réponds-nous simplement en un clic pour confirmer ta présence.</p>
-          <a class="primary-btn" id="rsvpButton" href="#">♡ Confirmer ma présence</a>
+
+          <div class="card-label">
+            Nous serons ravis de te voir
+          </div>
+
+          <h3>
+            Seras-tu de la fête ?
+          </h3>
+
+          <p>
+            Réponds-nous simplement en un clic
+            pour confirmer ta présence.
+          </p>
+
+          <a
+            class="primary-btn"
+            id="rsvpButton"
+            href="#">
+            ♡ Confirmer ma présence
+          </a>
+
         </article>
-        <footer>Avec tout notre amour · [PRÉNOM]</footer>
+
+
+        <footer>
+          Avec tout notre amour ·
+          <span id="footerName">
+            [PRÉNOM]
+          </span>
+          👑
+        </footer>
+
       </section>
+
     </div>
+
   </main>
+
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
+
   <script>
+
+    /*
+      ==========================================
+      CONFIGURATION DE L'ANNIVERSAIRE
+      ==========================================
+
+      MODIFIE SEULEMENT LES INFORMATIONS
+      CI-DESSOUS.
+    */
+
     const CONFIG = {
-      prenom: "[PRÉNOM]",
-      age: "[ÂGE]",
-      adresse: "[ADRESSE COMPLÈTE]",
-      whatsapp: "" // Ajoutez le numéro au format international, sans le signe +
+
+      prenom: "Aya",
+
+      age: "5",
+
+      date: "Samedi 12 Octobre 2026",
+
+      heure: "15h00",
+
+      lieu: "Salle des fêtes Princesse",
+
+      adresse: "Oran, Algérie",
+
+      /*
+        Numéro WhatsApp au format international
+        sans le signe +.
+
+        Exemple Algérie :
+        213XXXXXXXXX
+      */
+
+      whatsapp: "213774075155"
+
     };
 
-    const opening = document.getElementById("opening");
-    const invitation = document.getElementById("invitation");
-    const envelope = document.querySelector(".envelope");
-    const envelopeWrap = document.getElementById("envelope");
-    const openButton = document.getElementById("openButton");
+
+    /* ==========================================
+       ÉLÉMENTS
+    ========================================== */
+
+    const opening =
+      document.getElementById("opening");
+
+    const invitation =
+      document.getElementById("invitation");
+
+    const envelope =
+      document.querySelector(".envelope");
+
+    const envelopeWrap =
+      document.getElementById("envelope");
+
+    const openButton =
+      document.getElementById("openButton");
+
+
+    /* ==========================================
+       REMPLACER LES INFORMATIONS
+    ========================================== */
+
+    document.getElementById("birthday-title").innerHTML =
+      `L'anniversaire
+       <span>de ma petite princesse</span>`;
+
+    document.querySelector(".age-line").innerHTML =
+      `<strong>${CONFIG.prenom}</strong>
+       fête ses
+       <strong>${CONFIG.age} ans</strong>
+       🎂`;
+
+    document.getElementById("dateText").textContent =
+      CONFIG.date;
+
+    document.getElementById("timeText").textContent =
+      CONFIG.heure;
+
+    document.getElementById("placeText").textContent =
+      CONFIG.lieu;
+
+    document.getElementById("footerName").textContent =
+      CONFIG.prenom;
+
+
+    /* ==========================================
+       CONFETTIS
+    ========================================== */
 
     function confettiBurst() {
-      const colors = ["#d982a5", "#d8b06a", "#f4b9cb", "#814b65", "#fff9f5"];
+
+      const colors = [
+        "#d982a5",
+        "#d8b06a",
+        "#f4b9cb",
+        "#814b65",
+        "#fff9f5"
+      ];
+
       for (let i = 0; i < 42; i++) {
-        const bit = document.createElement("i");
+
+        const bit =
+          document.createElement("i");
+
         bit.className = "confetti";
-        bit.style.left = Math.random() * 100 + "vw";
-        bit.style.background = colors[i % colors.length];
-        bit.style.setProperty("--drift", (Math.random() * 180 - 90) + "px");
-        bit.style.animationDelay = Math.random() * .35 + "s";
-        bit.style.transform = `rotate(${Math.random() * 180}deg)`;
+
+        bit.style.left =
+          Math.random() * 100 + "vw";
+
+        bit.style.background =
+          colors[i % colors.length];
+
+        bit.style.setProperty(
+          "--drift",
+          (Math.random() * 180 - 90) + "px"
+        );
+
+        bit.style.animationDelay =
+          Math.random() * 0.35 + "s";
+
+        bit.style.transform =
+          `rotate(${Math.random() * 180}deg)`;
+
         document.body.appendChild(bit);
-        setTimeout(() => bit.remove(), 2500);
+
+        setTimeout(
+          () => bit.remove(),
+          2500
+        );
       }
     }
+
+
+    /* ==========================================
+       OUVRIR L'INVITATION
+    ========================================== */
 
     function openInvitation() {
-      if (envelope.classList.contains("is-open")) return;
-      envelope.classList.add("is-open");
-      confettiBurst();
-      setTimeout(() => opening.classList.add("leaving"), 650);
-      setTimeout(() => {
-        opening.classList.add("hidden");
-        invitation.classList.add("visible");
-        window.scrollTo(0, 0);
-      }, 1250);
-    }
 
-    openButton.addEventListener("click", openInvitation);
-    envelopeWrap.addEventListener("click", openInvitation);
-    envelopeWrap.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openInvitation();
-      }
-    });
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: .15 });
-    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-
-    document.getElementById("mapButton").addEventListener("click", () => {
-      if (CONFIG.adresse.startsWith("[")) {
-        alert("Ajoutez l’adresse complète dans la configuration de l’invitation.");
+      if (
+        envelope.classList.contains("is-open")
+      ) {
         return;
       }
-      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONFIG.adresse)}`, "_blank", "noopener,noreferrer");
-    });
 
-    document.getElementById("rsvpButton").addEventListener("click", event => {
-      event.preventDefault();
-      const message = `Bonjour, je confirme ma présence à l'anniversaire de ${CONFIG.prenom}.`;
-      const target = CONFIG.whatsapp
-        ? `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`
-        : `https://wa.me/?text=${encodeURIComponent(message)}`;
-      window.open(target, "_blank", "noopener,noreferrer");
-    });
+      envelope.classList.add("is-open");
+
+      confettiBurst();
+
+      setTimeout(() => {
+
+        opening.classList.add("leaving");
+
+      }, 650);
+
+
+      setTimeout(() => {
+
+        opening.classList.add("hidden");
+
+        invitation.classList.add("visible");
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }, 1250);
+
+    }
+
+
+    /* ==========================================
+       BOUTON OUVRIR
+    ========================================== */
+
+    openButton.addEventListener(
+      "click",
+      openInvitation
+    );
+
+
+    /* ==========================================
+       CLIQUER SUR L'ENVELOPPE
+    ========================================== */
+
+    envelopeWrap.addEventListener(
+      "click",
+      openInvitation
+    );
+
+
+    /* ==========================================
+       CLAVIER
+    ========================================== */
+
+    envelopeWrap.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+
+          event.preventDefault();
+
+          openInvitation();
+
+        }
+
+      }
+    );
+
+
+    /* ==========================================
+       ANIMATION DES CARTES
+    ========================================== */
+
+    const observer =
+      new IntersectionObserver(
+        (entries) => {
+
+          entries.forEach((entry) => {
+
+            if (entry.isIntersecting) {
+
+              entry.target.classList.add("in");
+
+              observer.unobserve(
+                entry.target
+              );
+
+            }
+
+          });
+
+        },
+        {
+          threshold: 0.15
+        }
+      );
+
+
+    document
+      .querySelectorAll(".reveal")
+      .forEach((el) => {
+
+        observer.observe(el);
+
+      });
+
+
+    /* ==========================================
+       GOOGLE MAPS
+    ========================================== */
+
+    document
+      .getElementById("mapButton")
+      .addEventListener(
+        "click",
+        () => {
+
+          if (
+            !CONFIG.adresse ||
+            CONFIG.adresse.trim() === ""
+          ) {
+
+            alert(
+              "Ajoutez l'adresse complète dans la configuration de l'invitation."
+            );
+
+            return;
+          }
+
+          const mapURL =
+            "https://www.google.com/maps/search/?api=1&query=" +
+            encodeURIComponent(CONFIG.adresse);
+
+          window.open(
+            mapURL,
+            "_blank",
+            "noopener,noreferrer"
+          );
+
+        }
+      );
+
+
+    /* ==========================================
+       WHATSAPP RSVP
+    ========================================== */
+
+    document
+      .getElementById("rsvpButton")
+      .addEventListener(
+        "click",
+        (event) => {
+
+          event.preventDefault();
+
+         const message = ` Bonjour, je serai ravie de partager ce joli moment avec ${CONFIG.prenom} et de célébrer avec elle cette merveilleuse journée.  Je lui souhaite d’ores et déjà un très joyeux anniversaire, rempli de bonheur, de rires et de magie ! `;
+
+let target;
+
+
+          if (
+            CONFIG.whatsapp &&
+            CONFIG.whatsapp.trim() !== ""
+          ) {
+
+            target =
+              "https://wa.me/" +
+              CONFIG.whatsapp +
+              "?text=" +
+              encodeURIComponent(message);
+
+          } else {
+
+            target =
+              "https://wa.me/?text=" +
+              encodeURIComponent(message);
+
+          }
+
+
+          window.open(
+            target,
+            "_blank",
+            "noopener,noreferrer"
+          );
+
+        }
+      );
+
   </script>
+
 </body>
 </html>
